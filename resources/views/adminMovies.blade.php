@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>movies</title>
 </head>
 <body>
@@ -17,6 +18,7 @@
             <th>概要</th>
             <th>登録日時</th>
             <th>更新日時</th>
+            <th>操作</th>
         </tr>
         @foreach ($adminMovies as $adminMovie)
         <tr>
@@ -28,9 +30,25 @@
             <td>{{ $adminMovie->description }}</td>
             <td>{{ $adminMovie->created_at }}</td>
             <td>{{ $adminMovie->updated_at }}</td>
+            <td>
+                <button onclick="window.location.href='{{ route('admin.movies.edit', ['id' => $adminMovie->id]) }}'">編集</button>
+            </td>
+
         </tr>
         @endforeach
     </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editLinks = document.querySelectorAll('.edit-link');
+
+            editLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    window.location.href = link.getAttribute('href');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
-

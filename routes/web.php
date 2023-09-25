@@ -29,3 +29,5 @@ Route::get('/movies', [Controller::class, 'movies']);
 Route::get('/admin/movies', [Controller::class, 'adminMovies']);
 Route::get('/admin/movies/create', [Controller::class, 'adminMoviesCreate']);
 Route::post('/admin/movies/store', [Controller::class, 'adminMoviesStore']);
+Route::get('/admin/movies/{id}/edit', [Controller::class, 'adminMoviesEdit'])->name('admin.movies.edit');
+Route::patch('/admin/movies/{id}/update', [Controller::class, 'adminMoviesUpdate']);
