@@ -15,3 +15,4 @@ yarn-error.log
 /.vscode
 .techtrain/config.toml
 /test-outputs/*.xml
+.DS_Store
