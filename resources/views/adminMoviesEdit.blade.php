@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>映画作品登録</title>
+    <title>映画を編集</title>
 </head>
 <body>
-    <h1>映画作品登録</h1>
+    <h1>映画を編集</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -55,8 +55,9 @@
             <input type="checkbox" name="is_showing" value="1" {{ old('is_showing', $movie->is_showing) ? 'checked' : '' }}>
         </div>
 
+
         <div>
-            <button type="submit">登録</button>
+            <button type="submit">映画を更新</button>
         </div>
     </form>
 </body>
