@@ -18,11 +18,14 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\PracticeController;
+use App\Http\Controllers\Controller;
 
 // Route::get('URL', [Controllerの名前::class, 'Controller内のfunction名']);
 Route::get('/practice', [PracticeController::class, 'sample']);
 Route::get('/practice2', [PracticeController::class, 'sample2']);
 Route::get('/practice3', [PracticeController::class, 'sample3']);
 Route::get('/getPractice', [PracticeController::class, 'getPractice']);
-Route::get('/movies', [PracticeController::class, 'movies']);
-Route::get('/admin/movies', [PracticeController::class, 'adminMovies']);
+Route::get('/movies', [Controller::class, 'movies']);
+Route::get('/admin/movies', [Controller::class, 'adminMovies']);
+Route::get('/admin/movies/create', [Controller::class, 'adminMoviesCreate']);
+Route::post('/admin/movies/store', [Controller::class, 'adminMoviesStore']);
