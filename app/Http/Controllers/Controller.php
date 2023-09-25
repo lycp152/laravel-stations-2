@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class Controller extends BaseController
 {
@@ -99,4 +100,18 @@ class Controller extends BaseController
 
         return redirect('/admin/movies')->with('success', '映画が正常に更新されました。');
     }
+
+    public function destroyMovie($id)
+    {
+        $movie = Movie::find($id);
+
+        if (!$movie) {
+            abort(404); // 映画が見つからない場合は404エラーを返す
+        }
+
+        $movie->delete();
+
+        return redirect('/admin/movies')->with('success', '映画が削除されました。');
+    }
+
 }

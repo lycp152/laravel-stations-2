@@ -8,6 +8,20 @@
     <title>movies</title>
 </head>
 <body>
+    <!-- フラッシュメッセージを表示 -->
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <!-- 画面内のテーブルとボタンを表示 -->
     <table border="1">
         <tr>
             <th>ID</th>
@@ -32,12 +46,13 @@
             <td>{{ $adminMovie->updated_at }}</td>
             <td>
                 <button onclick="window.location.href='{{ route('admin.movies.edit', ['id' => $adminMovie->id]) }}'">編集</button>
+                <button onclick="confirmAndDelete({{ $adminMovie->id }})">削除</button>
             </td>
-
         </tr>
         @endforeach
     </table>
 
+    <!-- JavaScriptのコード -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const editLinks = document.querySelectorAll('.edit-link');
@@ -49,6 +64,47 @@
                 });
             });
         });
+
+        function confirmAndDelete(movieId) {
+            if (confirm('本当に削除しますか？')) {
+                fetch(`/admin/movies/${movieId}/destroy`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('削除に失敗しました');
+                    }
+                })
+                .then(data => {
+                    if (data.success) {
+                        // メッセージを表示
+                        const messageDiv = document.createElement('div');
+                        messageDiv.innerText = data.success;
+                        messageDiv.classList.add('alert', 'alert-success');
+                        document.body.appendChild(messageDiv);
+
+                        // メッセージを非表示にするために一定時間後に削除
+                        setTimeout(function() {
+                            messageDiv.remove();
+                        }, 3000);
+
+                        // ページをリロードせずに成功メッセージを表示
+                        window.location.reload();
+                    } else {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('削除エラー:', error);
+                });
+            }
+        }
     </script>
 </body>
 </html>

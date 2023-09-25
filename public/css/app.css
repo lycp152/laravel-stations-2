@@ -52,7 +52,6 @@ img {
     max-width: 100%;
     height: auto;
     display: block;
-    margin-top: 10px;
 }
 
 /* テーブル全体のスタイル */
@@ -119,6 +118,7 @@ button {
 
 td button {
     white-space: nowrap;
+    margin-bottom: 15px;
 }
 
 form div {
